@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查詢個股</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="panel">
+            <a class="back-link" href="{{ url_for('index') }}">回首頁</a>
+            <h1>查詢個股</h1>
+
+            <form method="post" class="form">
+                <label for="stock_no">股票代號</label>
+                <div class="input-row">
+                    <input
+                        id="stock_no"
+                        name="stock_no"
+                        type="text"
+                        inputmode="numeric"
+                        placeholder="例如 2330"
+                        value="{{ stock_no }}"
+                        required
+                    >
+                    <button type="submit">查詢</button>
+                </div>
+            </form>
+
+            {% if warning %}
+                <p class="warning">{{ warning }}</p>
+            {% endif %}
+
+            {% if answer %}
+                <section class="result">
+                    <h2>{{ answer.stock_no }} 近一個月收盤價</h2>
+                    <div class="summary">
+                        <p>最高收盤價：<strong>{{ "%.2f"|format(answer.highest_close) }}</strong></p>
+                        <p>最低收盤價：<strong>{{ "%.2f"|format(answer.lowest_close) }}</strong></p>
+                    </div>
+
+                    <h2>近 10 個交易日開盤價與收盤價</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>開盤價</th>
+                                <th>收盤價</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in answer.daily_prices %}
+                                <tr>
+                                    <td>{{ row.date }}</td>
+                                    <td>{{ row.open }}</td>
+                                    <td>{{ row.close }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+            {% endif %}
+        </section>
+    </main>
+</body>
+</html>
