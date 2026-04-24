@@ -1,0 +1,151 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: #1f2933;
+    font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    background: #eef3f8;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 40px 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.panel {
+    width: min(920px, 100%);
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #d9e2ec;
+    border-radius: 8px;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+    margin: 0 0 16px;
+    font-size: 32px;
+}
+
+h2 {
+    margin: 28px 0 12px;
+    font-size: 22px;
+}
+
+p {
+    line-height: 1.7;
+}
+
+.button,
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    color: #ffffff;
+    font: inherit;
+    text-decoration: none;
+    background: #126e82;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button:hover,
+button:hover {
+    background: #0f5d6e;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #126e82;
+    text-decoration: none;
+}
+
+.form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.input-row {
+    display: flex;
+    gap: 12px;
+}
+
+input {
+    width: 100%;
+    min-height: 42px;
+    padding: 8px 12px;
+    font: inherit;
+    border: 1px solid #bcccdc;
+    border-radius: 6px;
+}
+
+.warning {
+    margin-top: 20px;
+    padding: 12px 14px;
+    color: #8a1f11;
+    background: #fff2f0;
+    border: 1px solid #ffccc7;
+    border-radius: 6px;
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.summary p {
+    margin: 0;
+    padding: 16px;
+    background: #f5f9fc;
+    border: 1px solid #d9e2ec;
+    border-radius: 6px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border: 1px solid #d9e2ec;
+    border-radius: 6px;
+}
+
+th,
+td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #d9e2ec;
+}
+
+th {
+    background: #f5f9fc;
+}
+
+tr:last-child td {
+    border-bottom: 0;
+}
+
+@media (max-width: 640px) {
+    .panel {
+        padding: 24px;
+    }
+
+    .input-row,
+    .summary {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+}
