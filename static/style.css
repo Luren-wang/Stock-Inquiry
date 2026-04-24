@@ -68,6 +68,15 @@ button:hover {
     text-decoration: none;
 }
 
+.credit {
+    position: fixed;
+    right: 18px;
+    bottom: 14px;
+    margin: 0;
+    color: #526472;
+    font-size: 14px;
+}
+
 .form {
     margin-top: 20px;
 }
@@ -89,12 +98,3 @@ input {
     padding: 8px 12px;
     font: inherit;
     border: 1px solid #bcccdc;
-    border-radius: 6px;
-}
-
-.warning {
-    margin-top: 20px;
-    padding: 12px 14px;
-    color: #8a1f11;
-    background: #fff2f0;
-    border: 1px solid #ffccc7;
