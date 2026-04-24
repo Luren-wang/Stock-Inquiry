@@ -7,7 +7,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-TWSE_STOCK_DAY_URL = "https://www.twse.com.tw/exchangeReport/STOCK_DAY"
+TWSE_STOCK_DAY_URL = "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY"
 TWSE_HEADERS = {
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
@@ -28,10 +28,12 @@ def parse_price(value):
 
 
 def fetch_stock_rows(stock_no):
-    response = requests.get(
+    session = requests.Session()
+    session.headers.update(TWSE_HEADERS)
+
+    response = session.get(
         TWSE_STOCK_DAY_URL,
         params={"response": "json", "stockNo": stock_no},
-        headers=TWSE_HEADERS,
         timeout=10,
     )
     response.raise_for_status()
