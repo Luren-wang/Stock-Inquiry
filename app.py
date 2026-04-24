@@ -1,4 +1,5 @@
 import os
+import logging
 
 import requests
 from flask import Flask, render_template, request
@@ -7,6 +8,16 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 TWSE_STOCK_DAY_URL = "https://www.twse.com.tw/exchangeReport/STOCK_DAY"
+TWSE_HEADERS = {
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.8",
+    "Referer": "https://www.twse.com.tw/zh/trading/historical/stock-day.html",
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+}
 
 
 def parse_price(value):
@@ -20,6 +31,7 @@ def fetch_stock_rows(stock_no):
     response = requests.get(
         TWSE_STOCK_DAY_URL,
         params={"response": "json", "stockNo": stock_no},
+        headers=TWSE_HEADERS,
         timeout=10,
     )
     response.raise_for_status()
@@ -83,6 +95,10 @@ def stock():
             try:
                 answer = build_stock_answer(stock_no)
             except requests.RequestException:
+                logging.exception("TWSE request failed for stock_no=%s", stock_no)
+                warning = "查詢失敗，請稍後再試。"
+            except ValueError:
+                logging.exception("TWSE response was not valid JSON for stock_no=%s", stock_no)
                 warning = "查詢失敗，請稍後再試。"
 
             if answer is None and warning is None:
