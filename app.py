@@ -1,9 +1,10 @@
+import os
+
 import requests
 from flask import Flask, render_template, request
 
 
 app = Flask(__name__)
-
 
 TWSE_STOCK_DAY_URL = "https://www.twse.com.tw/exchangeReport/STOCK_DAY"
 
@@ -35,16 +36,17 @@ def build_stock_answer(stock_no):
     if not rows:
         return None
 
-    recent_rows = rows[-10:]
-    daily_prices = []
     closing_prices = []
-
     for row in rows:
         close_price = parse_price(row[6])
         if close_price is not None:
             closing_prices.append(close_price)
 
-    for row in recent_rows:
+    if not closing_prices:
+        return None
+
+    daily_prices = []
+    for row in rows[-10:]:
         daily_prices.append(
             {
                 "date": row[0],
@@ -52,9 +54,6 @@ def build_stock_answer(stock_no):
                 "close": row[6],
             }
         )
-
-    if not closing_prices:
-        return None
 
     return {
         "stock_no": stock_no,
@@ -98,4 +97,5 @@ def stock():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
