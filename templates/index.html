@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Inquiry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="panel">
+            <h1>股價查詢系統</h1>
+            <p>使用證券交易所 API 查詢台灣股票近一個月交易資料。</p>
+            <a class="button" href="{{ url_for('stock') }}">查詢個股</a>
+        </section>
+    </main>
+</body>
+</html>
